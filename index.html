@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario</title>
+</head>
+<body>
+  <h1>Formulario</h1>
+  <form id="myForm">
+    <label for="nombres">NOMBRES:</label>
+    <input type="text" id="nombres" name="nombres" required><br><br>
+
+    <label for="identificacion">IDENTIFICACION:</label>
+    <input type="text" id="identificacion" name="identificacion" required><br><br>
+
+    <label for="celular">CELULAR:</label>
+    <input type="tel" id="celular" name="celular" required><br><br>
+
+    <label for="referidos">CANTIDAD DE REFERIDOS:</label>
+    <input type="number" id="referidos" name="referidos" required><br><br>
+
+    <input type="submit" value="Enviar">
+  </form>
+
+  <script>
+    const form = document.getElementById('myForm');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+
+      const formData = new FormData(form);
+      const entries = Array.from(formData.entries());
+      const values = Object.fromEntries(entries);
+
+      // Envío de los datos a la hoja de cálculo de Google mediante una solicitud POST
+      fetch('URL_DE_TU_SCRIPT_DE_GOOGLE_APPS_SCRIPT', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      })
+      .then(() => {
+        alert('Los datos se enviaron correctamente.');
+        form.reset(); // Reinicia el formulario después de enviar los datos
+      })
+      .catch((error) => {
+        alert('Hubo un error al enviar los datos.');
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>
