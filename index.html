@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Formulario registro Referidos 2023</title>
+  <script src="https://script.google.com/macros/s/AKfycby67j5Q1YplQenmHUv7v4FgcLSLkHbvFRQU2DpWNvzBjNfOHeg-V2wJO_cwX3krInQEHA/exec"></script>
 </head>
 <body>
   <h1>Formulario</h1>
@@ -33,23 +34,14 @@
       const values = Object.fromEntries(entries);
 
       // Envío de los datos a la hoja de cálculo de Google mediante una solicitud POST
-      fetch('https://script.google.com/macros/s/AKfycby67j5Q1YplQenmHUv7v4FgcLSLkHbvFRQU2DpWNvzBjNfOHeg-V2wJO_cwX3krInQEHA/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(values)
-      })
-      .then(() => {
-        alert('Los datos se enviaron correctamente.');
-        form.reset(); // Reinicia el formulario después de enviar los datos
-      })
-      .catch((error) => {
-        alert('Hubo un error al enviar los datos.');
-        console.error(error);
-      });
+      enviarDatos(values);
     });
+
+    function enviarDatos(data) {
+      google.script.run.procesarDatos(data); // Llama a la función 'procesarDatos' en el script de Google
+      alert('Los datos se enviaron correctamente.');
+      form.reset(); // Reinicia el formulario después de enviar los datos
+    }
   </script>
 </body>
 </html>
