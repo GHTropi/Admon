@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Referidos 2023</title>
-  <script src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSAfbkxYQPqeTy5L-aD0TX5o1ftBKP5jTM6BnHTaV-MM6YxSDCu1yKOuussiKhKxvADf6iqlXKNDHKs/pubhtml?gid=0&single=true"></script>
 </head>
 <body>
   <h1>Formulario registro Referidos 2023</h1>
@@ -34,14 +33,23 @@
       const values = Object.fromEntries(entries);
 
       // Envío de los datos a la hoja de cálculo de Google mediante una solicitud POST
-      enviarDatos(values);
+      fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSAfbkxYQPqeTy5L-aD0TX5o1ftBKP5jTM6BnHTaV-MM6YxSDCu1yKOuussiKhKxvADf6iqlXKNDHKs/pubhtml?gid=0&single=true', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      })
+      .then(() => {
+        alert('Los datos se enviaron correctamente.');
+        form.reset(); // Reinicia el formulario después de enviar los datos
+      })
+      .catch((error) => {
+        alert('Hubo un error al enviar los datos.');
+        console.error(error);
+      });
     });
-
-    function enviarDatos(data) {
-      google.script.run.procesarDatos(data); // Llama a la función 'procesarDatos' en el script de Google
-      alert('Los datos se enviaron correctamente.');
-      form.reset(); // Reinicia el formulario después de enviar los datos
-    }
   </script>
 </body>
 </html>
